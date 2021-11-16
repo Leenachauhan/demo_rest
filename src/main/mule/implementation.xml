@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config1" doc:name="Database Config" doc:id="377b5961-702d-473f-be30-0cc333f3e415" >
+		<db:my-sql-connection host="${db.host}" port="${db.port}" user="${db.db_user}" password="${db.db_password}" database="${db.db_name}" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="3d39d738-4e31-436c-84cc-20c2a7e735e4" file="config.yaml" />
+	<flow name="getFlightDetails" doc:id="380ead40-e6e7-4529-b25f-5934ced41738" >
+		<db:select doc:name="Select" doc:id="1522f2f0-3802-4b82-97ca-85da37cea695" config-ref="Database_Config1">
+			<db:sql ><![CDATA[select * from flightdetail;]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="cd0f6cf2-7493-4403-9138-1b67e08f45db" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="4f691074-28fc-4431-97c6-80ab728e2a42" message="#[payload]"/>
+	</flow>
+	<flow name="flightBookingById" doc:id="7bf43bb9-3101-40fa-8bdf-d55f28af2467" >
+		<db:insert doc:name="Insert" doc:id="f9ec789c-dfc7-4eeb-beee-e8b170a87ef5" config-ref="Database_Config1">
+			<db:sql ><![CDATA[INSERT INTO bookingdetails
+VALUES (:flightID, :seatNo, :name, :sourceLocation, :destinationLocation, :price);]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	"flightId": payload.flightId,
+	"seatNo": payload.seatNo,
+	"name": payload.name,
+	"sourceLocation": payload.sourceLocation,
+	"destinationLocation": payload.destinationLocation,
+	"price": payload.price	
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="ff19ddd0-f8d0-43fc-b37d-5de7619c0f6b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "message": "Booked successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getFlightDetailsByID" doc:id="4a3e5502-4b9e-479f-ba46-779758e3dc03" >
+		<db:query-single doc:name="Query single" doc:id="2d45c5a9-8cd1-4b44-8e07-e30ff0a74c9b" config-ref="Database_Config1">
+				<db:sql><![CDATA[SELECT * FROM flightdetail WHERE flightId = :flightID;]]></db:sql>
+				<db:input-parameters><![CDATA[#[{'flightID':attributes.uriParams.flightId as String}]]]></db:input-parameters>
+			</db:query-single>
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="48a740ca-939e-4ba2-8a82-9fe58107d593" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

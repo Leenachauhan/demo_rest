@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-test-suite.xml" />
+	<munit:test name="implementation-test-suite-getFlightDetailsTest" doc:id="f05df647-ff68-4bd7-838e-8360e4d8652d" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getFlightDetails" doc:id="b90e9a83-2d3c-40f5-8441-00045762ab7e" name="getFlightDetails"/>
+		</munit:execution>
+	</munit:test>
+	<munit:test name="implementation-test-suite-getFlightDetailsByIDTest" doc:id="9038ea0a-3daa-43b1-aacb-04b364b30ad5" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getFlightDetailsByID" doc:id="1f9f535f-ac3d-49b2-9d80-01cf08d64ca9" name="getFlightDetailsByID"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

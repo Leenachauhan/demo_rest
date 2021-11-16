@@ -1,0 +1,78 @@
+#%RAML 1.0
+title: Flights Booking
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error
+
+/flights:
+  get:
+    is: [client-id-required]
+    description: Details of flights that can be booked
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "flights": [
+                  {
+                    "flighId": "550e3300",
+                    "flightName": "IG-770",
+                    "AirportCode" : "LAX",
+                    "AirportName" : "Los Angeles",
+                    "from" : "LAX",
+                    "to" : "Austin",
+                    "Departure" : "25 Jun 2019",
+                    "Arrival" : "25 Jun 2019",
+                    "depTime" : "1:05 AM",
+                    "arrTime" : "2:05 AM"
+                  },
+                  {
+                    "flighId": "550e8400",
+                    "flightName": "QT-667",
+                    "AirportCode" : "LAX",
+                    "AirportName" : "Los Angeles",
+                    "from" : "LAX",
+                    "to" : "Austin",
+                    "Departure" : "25 Jun 2019",
+                    "Arrival" : "25 Jun 2019",
+                    "depTime" : "1:05 AM",
+                    "arrTime" : "2:05 AM" 
+                  }
+                ]
+              }
+
+  /{flightId}:
+    get:
+      responses:
+        200:
+          description: Booking a flight and returning the eticket
+          body:
+            application/json:
+              example:
+                 {
+                  "flightId": "550e8400-e29b-41d4-a716-446655440000",
+                  "duration": "180:07",
+                  "price" : "Rs 600",
+                  "seatNo" : "12",
+                  "AirportCode" : "LAX",
+                  "AirportName" : "Los Angeles",
+                  "from" : "LAX",
+                  "to" : "Austin",
+                  "Departure" : "25 Jun 2019",
+                  "Arrival" : "25 Jun 2019",
+                  "depTime" : "1:05 AM",
+                  "arrTime" : "2:05 AM" 
+                 }
+          
+

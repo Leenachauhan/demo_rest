@@ -1,0 +1,23 @@
+%dw 2.0
+
+type auto_4a3e5502_4b9e_479f_ba46_779758e3dc03_Output_Attributes = {|
+  clientCertificate?: {|
+    publicKey?: {|  |}, 
+    "type"?: String, 
+    encoded?: Binary
+  |}, 
+  headers: {|  |}, 
+  listenerPath: String, 
+  method: String, 
+  queryParams: {| flightID: String |}, 
+  queryString: String, 
+  relativePath: String, 
+  remoteAddress: String, 
+  requestPath: String, 
+  requestUri: String, 
+  scheme: String, 
+  uriParams: {| flightId: String |}, 
+  version: String, 
+  localAddress: String
+|}
+

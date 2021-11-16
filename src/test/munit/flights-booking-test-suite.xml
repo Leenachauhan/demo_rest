@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="flights-booking-test-suite.xml" />
+	<munit:test name="flights-booking-test-suite-get:\flights:flights-booking-configTest" doc:id="fdd92073-c14b-40e3-8dd9-159418c7ab06" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\flights:flights-booking-config" doc:id="405c6f30-4ae7-422e-a986-034f06462aec" name="get:\flights:flights-booking-config"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

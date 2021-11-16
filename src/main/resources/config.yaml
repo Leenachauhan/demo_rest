@@ -1,0 +1,6 @@
+db: 
+  host: "sql5.freesqldatabase.com"
+  db_name: "sql5451534"
+  db_user: "sql5451534"
+  db_password: "uuhlrnfE6A"
+  port: "3306"
